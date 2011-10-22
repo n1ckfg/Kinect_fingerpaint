@@ -2,7 +2,8 @@ import processing.opengl.*;
 
 //--  GLOBALS  --
 boolean useOsc = true;
-boolean debug = false;
+boolean display = true;
+boolean debug = true;
 
 int sW = 640;
 int sH = 480;
@@ -41,21 +42,33 @@ void draw() {
     }
     oscSend();
   }
-  if(debug){
+  if(display){
   strokeWeight(2);
   stroke(127,127,0,abs(255-((getDist/width)*255)));
+  if(debug){
+  line(rPosX,rPosY,mouseX,mouseY);
+  }else{
   line(rPosX,rPosY,lPosX,lPosY);
+  }
   getDist = dist(rPosX,rPosY,lPosX,lPosY);
   println("dist: " + getDist);
   fill(127,127,0,0.5*abs(255-((getDist/width)*255)));
   noStroke();
   ellipse(rPosX,rPosY,range,range);
-  ellipse(lPosX,lPosY,range,range);
+  if(debug){
+    ellipse(mouseX,mouseY,range,range);
+  }else{
+    ellipse(lPosX,lPosY,range,range);
+  }
   strokeWeight(dotSize);
   stroke(255,0,0);
   point(rPosX,rPosY);
   stroke(0,255,0);
+  if(debug){
+  point(mouseX,mouseY);
+  }else{
   point(lPosX,lPosY);
+  }
   }
 }
 
